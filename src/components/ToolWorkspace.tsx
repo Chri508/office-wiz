@@ -89,7 +89,10 @@ export function ToolWorkspace({ toolId }: { toolId: ToolId }) {
 
   async function onFile(name: string, file?: File) {
     if (!file) return;
-    if (file.size > 500_000) return toast.error("File too large (max 500KB).");
+    if (file.size > 500_000) {
+      toast.error("File too large (max 500KB).");
+      return;
+    }
     const text = await file.text();
     set(name, (values[name] ? values[name] + "\n\n" : "") + text);
     toast.success(`Added ${file.name}`);
@@ -121,7 +124,7 @@ export function ToolWorkspace({ toolId }: { toolId: ToolId }) {
             {f.type === "textarea" ? (
               <Textarea id={f.name} rows={f.rows} placeholder={f.placeholder} value={values[f.name]} onChange={(e) => set(f.name, e.target.value)} />
             ) : f.type === "select" ? (
-              <Select value={values[f.name]} onValueChange={(v) => set(f.name, v)}>
+              <Select value={values[f.name] ?? ""} onValueChange={(v) => set(f.name, v)}>
                 <SelectTrigger id={f.name}><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {f.options!.map((o) => <SelectItem key={o} value={o}>{o}</SelectItem>)}
