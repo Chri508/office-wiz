@@ -14,8 +14,8 @@ import { useQueryClient } from "@tanstack/react-query";
 export function ToolWorkspace({ toolId }: { toolId: ToolId }) {
   const tool = TOOLS[toolId];
   const qc = useQueryClient();
-  const [values, setValues] = useState<Record<string, string>>(() =>
-    Object.fromEntries(tool.fields.map((f) => [f.name, f.type === "select" ? f.options![0] : ""])),
+  const [values, setValues] = useState<Record<string, string>>(
+    () => Object.fromEntries(tool.fields.map((f) => [f.name, f.type === "select" ? (f.options?.[0] ?? "") : ""])) as Record<string, string>,
   );
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);

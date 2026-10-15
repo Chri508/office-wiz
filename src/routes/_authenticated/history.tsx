@@ -11,7 +11,7 @@ import { listResults } from "@/lib/results";
 import type { ToolId } from "@/lib/tools";
 
 export const Route = createFileRoute("/_authenticated/history")({
-  validateSearch: (s: Record<string, unknown>) => ({ tab: s.tab === "saved" ? ("saved" as const) : ("all" as const) }),
+  validateSearch: (s: Record<string, unknown>) => ({ tab: s["tab"] === "saved" ? ("saved" as const) : ("all" as const) }),
   head: () => ({ meta: [{ title: "History & Saved — Workwise" }, { name: "description", content: "Browse your saved results and full activity history." }] }),
   component: HistoryPage,
 });
